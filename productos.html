@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Productos | Monos Chinos Store</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navbar Admin -->
+  <nav class="navbar navbar-mcs">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <span class="brand-accent">Monos</span> Chinos Store
+      </a>
+      <div class="d-flex align-items-center gap-3">
+        <span class="badge-admin" id="badgeRol"></span>
+        <span class="small text-muted" id="navUsuario"></span>
+        <button class="btn btn-outline-rojo btn-sm-custom" id="btnSalir">Cerrar sesión</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+
+    <!-- Dashboard -->
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
+      <h1 class="h3 mb-0">Hola, <span id="nombreUsuario"></span></h1>
+    </div>
+
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <div class="card card-admin h-100">
+          <div class="card-body">
+            <div class="card-title">Productos activos</div>
+            <div class="display-6 mb-0" id="totalActivos">—</div>
+            <div class="card-text">de <span id="totalProductos">—</span> registrados</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-admin h-100">
+          <div class="card-body">
+            <div class="card-title">Sin stock</div>
+            <div class="display-6 mb-0" id="totalSinStock">—</div>
+            <div class="card-text">productos agotados</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-admin h-100">
+          <div class="card-body">
+            <div class="card-title">Categorías</div>
+            <div class="display-6 mb-0" id="totalCategorias">—</div>
+            <div class="card-text">distintas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+      <h2 class="h4 mb-0">Productos</h2>
+      <button class="btn btn-rojo d-none" id="btnNuevo">+ Nuevo producto</button>
+    </div>
+
+    <div class="row g-2 mb-3">
+      <div class="col-sm-7">
+        <label for="buscador" class="form-label visually-hidden">Buscar productos</label>
+        <input type="search" class="form-control" id="buscador" maxlength="60" placeholder="Buscar por nombre, código o categoría...">
+      </div>
+      <div class="col-sm-5">
+        <label for="filtroCategoria" class="form-label visually-hidden">Filtrar por categoría</label>
+        <select class="form-select" id="filtroCategoria">
+          <option value="">Todas las categorías</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="aviso" class="alert d-none"></div>
+
+    <!-- Formulario -->
+    <div class="panel-form mb-4 p-3 p-md-4 d-none" id="panelForm">
+      <h2 class="h5 mb-3" id="tituloForm">Nuevo producto</h2>
+
+      <div id="errorForm" class="alert alert-danger d-none"></div>
+      <input type="hidden" id="prodId">
+
+      <div class="row g-3">
+        <div class="col-md-3">
+          <label for="prodCodigo" class="form-label">Código</label>
+          <input type="text" class="form-control" id="prodCodigo" maxlength="20" placeholder="ej: NAR-F02">
+        </div>
+        <div class="col-md-5">
+          <label for="prodNombre" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="prodNombre" maxlength="80">
+        </div>
+        <div class="col-md-4">
+          <label for="prodCategoria" class="form-label">Categoría</label>
+          <input type="text" class="form-control" id="prodCategoria" maxlength="40" list="sugerencias">
+          <datalist id="sugerencias"></datalist>
+        </div>
+        <div class="col-md-3">
+          <label for="prodPrecio" class="form-label">Precio (CLP)</label>
+          <input type="number" class="form-control" id="prodPrecio" min="0" step="1">
+        </div>
+        <div class="col-md-3">
+          <label for="prodStock" class="form-label">Stock</label>
+          <input type="number" class="form-control" id="prodStock" min="0" step="1">
+        </div>
+        <div class="col-md-6">
+          <label for="prodDesc" class="form-label">Descripción</label>
+          <input type="text" class="form-control" id="prodDesc" maxlength="200">
+        </div>
+        <div class="col-md-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="prodActivo" checked>
+            <label class="form-check-label" for="prodActivo">Producto activo</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3 d-flex gap-2">
+        <button type="button" class="btn btn-rojo" id="btnGuardar">Guardar producto</button>
+        <button type="button" class="btn btn-outline-secondary" id="btnCancelar">Cancelar</button>
+      </div>
+    </div>
+
+    <!-- Tabla -->
+    <div class="tabla-admin">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th style="width:60px"></th>
+              <th>Código</th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th class="text-end">Precio</th>
+              <th class="text-end">Stock</th>
+              <th>Estado</th>
+              <th class="text-end d-none" id="thAcciones">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tablaProductos"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer mínimo -->
+  <footer class="footer-mcs" style="margin-top:3rem;padding:1.5rem 0;">
+    <div class="container text-center">
+      <p class="mb-0 small">&copy; 2026 Monos Chinos Store. Panel de administración.</p>
+    </div>
+  </footer>
+
+<script>
+/* ============ SEED DE PRODUCTOS CON IMÁGENES REALES ============ */
+var SEED_PRODUCTOS = [
+  { id:1,  codigo:"NAR-F01",  nombre:"Nendoroid Naruto Uzumaki",              categoria:"Figura", precio:45990, precioAnt:52990, stock:15, activo:true, desc:"Figura Nendoroid de Naruto Uzumaki (Shippuden) con rostros intercambiables y accesorios. Good Smile Company.", img:"https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80", marca:"Good Smile Company" },
+  { id:2,  codigo:"RZ-F01",   nombre:"Figura Scale Rem Re:Zero 1/7",          categoria:"Figura", precio:89990, precioAnt:0, stock:8,  activo:true, desc:"Figura a escala 1/7 de Rem (Re:Zero kara Hajimeru Isekai Seikatsu). Alta calidad de pintura y base decorativa. Kadokawa.", img:"https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80", marca:"Kadokawa / Kadokawa Collection" },
+  { id:3,  codigo:"OP-F01",   nombre:"Figura Monkey D. Luffy Gear 5",         categoria:"Figura", precio:64990, precioAnt:72990, stock:12, activo:true, desc:"Figura de Luffy en su forma Gear 5 (One Piece). PVC de alta calidad con efectos de llama. Banpresto / Bandai Spirits.", img:"https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80", marca:"Bandai Spirits / Banpresto" },
+  { id:4,  codigo:"DS-F01",   nombre:"Figura Tanjiro Kamado Water Breathing", categoria:"Figura", precio:52990, precioAnt:0, stock:10, activo:true, desc:"Figura de Tanjiro Kamado con efecto Water Breathing (Kimetsu no Yaiba). Edición especial con base de efectos translúcidos.", img:"https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=600&auto=format&fit=crop&q=80", marca:"Aniplex / Kotobukiya" },
+  { id:5,  codigo:"OP-M01",   nombre:"One Piece Vol. 1-3 Pack",               categoria:"Manga",  precio:15990, precioAnt:0, stock:25, activo:true, desc:"Pack de los primeros 3 volúmenes de One Piece (Edición japonesa original). Eiichiro Oda / Shueisha.", img:"https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg", marca:"Shueisha / Jump Comics" },
+  { id:6,  codigo:"NAR-M01",  nombre:"Naruto Vol. 1-5 Pack",                  categoria:"Manga",  precio:24990, precioAnt:28990, stock:20, activo:true, desc:"Pack de los primeros 5 volúmenes de Naruto (Edición japonesa). Masashi Kishimoto / Shueisha.", img:"https://upload.wikimedia.org/wikipedia/en/9/94/NarutoCoverTankobon1.jpg", marca:"Shueisha / Jump Comics" },
+  { id:7,  codigo:"DB-M01",   nombre:"Dragon Ball Vol. 1-3 Edición Kanzenban", categoria:"Manga",  precio:18990, precioAnt:0, stock:18, activo:true, desc:"Edición Kanzenban de los primeros volúmenes de Dragon Ball. Akira Toriyama / Shueisha. Papel de alta calidad.", img:"https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80", marca:"Shueisha / Jump Comics" },
+  { id:8,  codigo:"TG-C01",   nombre:"THE GAZETTE - Stacked 24h",             categoria:"CD",     precio:14990, precioAnt:0, stock:6,  activo:true, desc:"Álbum 'Stacked 24h' de THE GAZETTE (Visual Kei). Edición original importada de Japón con booklet completo.", img:"https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?w=600&auto=format&fit=crop&q=80", marca:"Sony Music / King Records" },
+  { id:9,  codigo:"OOR-C01",  nombre:"ONE OK ROCK - Eye of the Storm",        categoria:"CD",     precio:12990, precioAnt:15990, stock:10, activo:true, desc:"Álbum 'Eye of the Storm' de ONE OK ROCK. Rock alternativo japonés producido por Rob Cavallo. Edición japonesa con bonus track.", img:"https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80", marca:"Fueled By Ramen / Warner Music" },
+  { id:10, codigo:"AIM-C01",  nombre:"Aimer - Walpurgis",                     categoria:"CD",     precio:13990, precioAnt:0, stock:8,  activo:true, desc:"Single 'Walpurgis' de Aimer. Cantante japonesa famosa por openings/endings de anime (Fate, Kimetsu, etc.). Edición limitada.", img:"https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80", marca:"SACRA MUSIC / Sony Music" },
+  { id:11, codigo:"TOT-M01",  nombre:"Llavero Totoro - Mi Vecino Totoro",     categoria:"Merch",  precio:3990,  precioAnt:0, stock:35, activo:true, desc:"Llavero metálico esmaltado de Totoro (Studio Ghibli). Detalle premium, anilla resistente. Producto oficial.", img:"https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80", marca:"Studio Ghibli / Benelic" },
+  { id:12, codigo:"DS-M01",   nombre:"Poster Demon Slayer Edición Limitada",  categoria:"Merch",  precio:7990,  precioAnt:9990, stock:20, activo:true, desc:"Poster oficial Kimetsu no Yaiba (Demon Slayer) tamaño A3. Impresión offset alta calidad. Edición limitada.", img:"https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=600&auto=format&fit=crop&q=80", marca:"Aniplex / Ufotable" }
+];
+
+var KEY_SESION    = "mcs_sesion";
+var KEY_PRODUCTOS = "mcs_productos";
+var productos = [];
+var esAdmin   = false;
+
+function leerSesion() {
+  try {
+    var s = JSON.parse(sessionStorage.getItem(KEY_SESION));
+    if (!s || !s.usuario || !s.rol) return null;
+    if (s.expira && Date.now() > s.expira) {
+      sessionStorage.removeItem(KEY_SESION);
+      return null;
+    }
+    return s;
+  } catch(e) { return null; }
+}
+
+function cerrarSesion() {
+  sessionStorage.removeItem(KEY_SESION);
+  window.location.replace("login.html");
+}
+
+function cargarProductos() {
+  var guardados = localStorage.getItem(KEY_PRODUCTOS);
+  if (guardados) { try { return JSON.parse(guardados); } catch(e) {} }
+  localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(SEED_PRODUCTOS));
+  return SEED_PRODUCTOS.slice();
+}
+
+function guardarProductos() {
+  localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(productos));
+}
+
+function buscarProducto(id) {
+  for (var i = 0; i < productos.length; i++) {
+    if (productos[i].id === id) return productos[i];
+  }
+  return null;
+}
+
+function siguienteId() {
+  var mayor = 0;
+  for (var i = 0; i < productos.length; i++) {
+    if (productos[i].id > mayor) mayor = productos[i].id;
+  }
+  return mayor + 1;
+}
+
+function cerrarFormulario() {
+  document.getElementById("panelForm").classList.add("d-none");
+}
+
+function limpiarFormulario() {
+  document.getElementById("prodId").value = "";
+  document.getElementById("prodCodigo").value = "";
+  document.getElementById("prodNombre").value = "";
+  document.getElementById("prodCategoria").value = "";
+  document.getElementById("prodPrecio").value = "";
+  document.getElementById("prodStock").value = "";
+  document.getElementById("prodDesc").value = "";
+  document.getElementById("prodActivo").checked = true;
+}
+
+function mostrarErrorForm(msg) {
+  var el = document.getElementById("errorForm");
+  el.textContent = msg;
+  el.classList.remove("d-none");
+}
+
+function ocultarErrorForm() {
+  document.getElementById("errorForm").classList.add("d-none");
+}
+
+function mostrarAviso(mensaje, tipo) {
+  var aviso = document.getElementById("aviso");
+  aviso.className = "alert alert-" + tipo;
+  aviso.textContent = mensaje;
+  setTimeout(function() { aviso.classList.add("d-none"); }, 3000);
+}
+
+function llenarCategorias() {
+  var select   = document.getElementById("filtroCategoria");
+  var datalist = document.getElementById("sugerencias");
+  var seleccionada = select.value;
+  var cats = [];
+  for (var i = 0; i < productos.length; i++) {
+    if (cats.indexOf(productos[i].categoria) === -1) cats.push(productos[i].categoria);
+  }
+  cats.sort();
+  select.innerHTML   = '<option value="">Todas las categorías</option>';
+  datalist.innerHTML = "";
+  for (var j = 0; j < cats.length; j++) {
+    var opSel = document.createElement("option");
+    opSel.value = cats[j];
+    select.appendChild(opSel);
+    var opList = document.createElement("option");
+    opList.value = cats[j];
+    datalist.appendChild(opList);
+  }
+  select.value = seleccionada;
+}
+
+function actualizarDashboard() {
+  document.getElementById("totalProductos").textContent = productos.length;
+  document.getElementById("totalActivos").textContent   = productos.filter(function(p) { return p.activo; }).length;
+  document.getElementById("totalSinStock").textContent  = productos.filter(function(p) { return p.stock === 0; }).length;
+  var cats = [];
+  for (var i = 0; i < productos.length; i++) {
+    if (cats.indexOf(productos[i].categoria) === -1) cats.push(productos[i].categoria);
+  }
+  document.getElementById("totalCategorias").textContent = cats.length;
+}
+
+function pintarTabla() {
+  var tbody     = document.getElementById("tablaProductos");
+  var texto     = document.getElementById("buscador").value.toLowerCase();
+  var categoria = document.getElementById("filtroCategoria").value;
+  tbody.innerHTML = "";
+  var mostrados = 0;
+
+  for (var i = 0; i < productos.length; i++) {
+    var p = productos[i];
+    var textoBusqueda = (p.codigo + " " + p.nombre + " " + p.categoria + " " + (p.marca||"")).toLowerCase();
+    if (textoBusqueda.indexOf(texto) === -1) continue;
+    if (categoria !== "" && p.categoria !== categoria) continue;
+
+    var fila = document.createElement("tr");
+
+    /* Thumbnail imagen */
+    var celdaImg = document.createElement("td");
+    var img = document.createElement("img");
+    img.src = p.img;
+    img.alt = p.nombre;
+    img.style.cssText = "width:48px;height:48px;border-radius:4px;object-fit:cover;";
+    celdaImg.appendChild(img);
+    fila.appendChild(celdaImg);
+
+    fila.appendChild(crearCelda(p.codigo));
+    fila.appendChild(crearCelda(p.nombre));
+    fila.appendChild(crearCelda(p.categoria));
+    
+    var priceHtml = "$" + p.precio.toLocaleString("es-CL");
+    if (p.precioAnt && p.precioAnt > p.precio) {
+      priceHtml += ' <span class="text-decoration-line-through text-muted" style="font-size:0.75rem;">$' + p.precioAnt.toLocaleString("es-CL") + '</span>';
+    }
+    fila.appendChild(crearCeldaHTML(priceHtml, "text-end"));
+    
+    var stockClass = p.stock === 0 ? "text-danger fw-bold" : (p.stock <= 5 ? "text-warning fw-bold" : "text-success");
+    fila.appendChild(crearCeldaHTML('<span class="' + stockClass + '">' + p.stock + '</span>', "text-end"));
+    
+    var estadoHtml = p.activo ? '<span class="badge bg-success">Activo</span>' : '<span class="badge bg-secondary">Inactivo</span>';
+    fila.appendChild(crearCeldaHTML(estadoHtml));
+
+    if (esAdmin) {
+      var celdaAcciones = document.createElement("td");
+      celdaAcciones.className = "text-end text-nowrap";
+
+      var btnEditar = document.createElement("button");
+      btnEditar.className   = "btn btn-sm btn-outline-dorado";
+      btnEditar.textContent = "Editar";
+      btnEditar.addEventListener("click", (function(id) {
+        return function() { editarProducto(id); };
+      })(p.id));
+
+      var btnEliminar = document.createElement("button");
+      btnEliminar.className   = "btn btn-sm btn-outline-rojo ms-1";
+      btnEliminar.textContent = "Eliminar";
+      btnEliminar.addEventListener("click", (function(id) {
+        return function() { eliminarProducto(id); };
+      })(p.id));
+
+      celdaAcciones.appendChild(btnEditar);
+      celdaAcciones.appendChild(btnEliminar);
+      fila.appendChild(celdaAcciones);
+    }
+
+    tbody.appendChild(fila);
+    mostrados++;
+  }
+
+  if (mostrados === 0) {
+    var fila  = document.createElement("tr");
+    var celda = document.createElement("td");
+    celda.colSpan     = esAdmin ? 8 : 7;
+    celda.className   = "text-center py-4 text-muted";
+    celda.textContent = "No hay productos que coincidan con la búsqueda.";
+    fila.appendChild(celda);
+    tbody.appendChild(fila);
+  }
+}
+
+function crearCelda(valor, clases) {
+  var celda = document.createElement("td");
+  celda.textContent = valor;
+  if (clases) celda.className = clases;
+  return celda;
+}
+
+function crearCeldaHTML(html, clases) {
+  var celda = document.createElement("td");
+  celda.innerHTML = html;
+  if (clases) celda.className = clases;
+  return celda;
+}
+
+function nuevoProducto() {
+  ocultarErrorForm();
+  limpiarFormulario();
+  document.getElementById("tituloForm").textContent = "Nuevo producto";
+  document.getElementById("panelForm").classList.remove("d-none");
+  document.getElementById("prodCodigo").focus();
+}
+
+function editarProducto(id) {
+  var p = buscarProducto(id);
+  if (!p) return;
+  ocultarErrorForm();
+  limpiarFormulario();
+  document.getElementById("tituloForm").textContent = "Editar producto";
+  document.getElementById("prodId").value       = p.id;
+  document.getElementById("prodCodigo").value   = p.codigo;
+  document.getElementById("prodNombre").value   = p.nombre;
+  document.getElementById("prodCategoria").value = p.categoria;
+  document.getElementById("prodPrecio").value   = p.precio;
+  document.getElementById("prodStock").value    = p.stock;
+  document.getElementById("prodDesc").value     = p.desc || "";
+  document.getElementById("prodActivo").checked = p.activo;
+  document.getElementById("panelForm").classList.remove("d-none");
+  document.getElementById("prodNombre").focus();
+}
+
+function eliminarProducto(id) {
+  if (!confirm("¿Seguro que quieres eliminar este producto?")) return;
+  var nuevaLista = [];
+  for (var i = 0; i < productos.length; i++) {
+    if (productos[i].id !== id) nuevaLista.push(productos[i]);
+  }
+  productos = nuevaLista;
+  guardarProductos();
+  actualizarDashboard();
+  llenarCategorias();
+  pintarTabla();
+  mostrarAviso("Producto eliminado", "success");
+}
+
+function generarImgPorDefecto(codigo) {
+  var prefijo = codigo.split("-")[0] || "PROD";
+  return "https://placehold.co/60x60/f5f5f5/BA1E1E?text=" + encodeURIComponent(prefijo);
+}
+
+function guardarProducto() {
+  ocultarErrorForm();
+  var id        = document.getElementById("prodId").value;
+  var codigo    = document.getElementById("prodCodigo").value.trim();
+  var nombre    = document.getElementById("prodNombre").value.trim();
+  var categoria = document.getElementById("prodCategoria").value.trim();
+  var precio    = document.getElementById("prodPrecio").value;
+  var stock     = document.getElementById("prodStock").value;
+  var desc      = document.getElementById("prodDesc").value.trim();
+  var activo    = document.getElementById("prodActivo").checked;
+
+  if (!codigo || !nombre || !categoria) {
+    mostrarErrorForm("Completa código, nombre y categoría.");
+    return;
+  }
+
+  if (id === "") {
+    productos.push({
+      id: siguienteId(), codigo: codigo, nombre: nombre, categoria: categoria,
+      precio: Number(precio), stock: Number(stock), activo: activo, desc: desc,
+      img: generarImgPorDefecto(codigo), marca: "Importado Japón", precioAnt: 0
+    });
+    mostrarAviso("Producto creado correctamente", "success");
+  } else {
+    var p = buscarProducto(Number(id));
+    if (!p) return;
+    p.codigo = codigo; p.nombre = nombre; p.categoria = categoria;
+    p.precio = Number(precio); p.stock = Number(stock); p.activo = activo; p.desc = desc;
+    mostrarAviso("Producto actualizado correctamente", "success");
+  }
+
+  guardarProductos();
+  actualizarDashboard();
+  llenarCategorias();
+  pintarTabla();
+  cerrarFormulario();
+}
+
+/* ============ ARRANQUE ============ */
+var sesion = leerSesion();
+
+if (!sesion) {
+  window.location.replace("login.html");
+} else {
+  esAdmin = sesion.rol === "admin";
+
+  document.getElementById("nombreUsuario").textContent = sesion.nombre;
+  document.getElementById("navUsuario").textContent    = sesion.usuario;
+  document.getElementById("badgeRol").textContent      = esAdmin ? "Admin" : sesion.rol;
+
+  if (esAdmin) {
+    document.getElementById("btnNuevo").classList.remove("d-none");
+    document.getElementById("thAcciones").classList.remove("d-none");
+  }
+
+  productos = cargarProductos();
+  llenarCategorias();
+  actualizarDashboard();
+  pintarTabla();
+
+  document.getElementById("btnSalir").addEventListener("click", cerrarSesion);
+  document.getElementById("buscador").addEventListener("input", pintarTabla);
+  document.getElementById("filtroCategoria").addEventListener("change", pintarTabla);
+  document.getElementById("btnNuevo").addEventListener("click", nuevoProducto);
+  document.getElementById("btnGuardar").addEventListener("click", guardarProducto);
+  document.getElementById("btnCancelar").addEventListener("click", function() {
+    cerrarFormulario();
+    ocultarErrorForm();
+  });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monos Chinos Store — Figuras, Manga, CDs y Merch Japonés</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Bar / Anuncio -->
+  <div class="top-bar">
+    <div class="container">
+      <span>🚚 Despacho a todo Chile por Starken / Chilexpress / CorreosChile</span>
+      <span>🔒 Compra 100% segura — Garantía total en tu pedido</span>
+      <span>📦 Envíos semanales — Productos 100% originales importados</span>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-mcs">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navPrincipal" aria-label="Menú" style="border:none;">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="stroke-width:2;">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navPrincipal">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" href="#catalogo">Tienda</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#categorias">Categorías</a>
+          </li>
+        </ul>
+
+        <!-- Logo Centrado -->
+        <a class="navbar-brand mx-auto my-2 my-lg-0" href="index.html">
+          <span class="brand-accent">Monos</span> Chinos Store
+        </a>
+
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+          <li class="nav-item">
+            <a class="nav-link" href="login.html">Ingresar</a>
+          </li>
+          <li class="nav-item ms-lg-2">
+            <a class="btn btn-outline-rojo btn-sm-custom" href="login.html">Admin</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+
+    <!-- Hero Banner -->
+    <section class="hero-banner mb-5" aria-label="Banner principal">
+      <img src="https://assets.jumpseller.com/store/yumestore/themes/483293/options/116607367/DGBD.jpg?1688756432" 
+           alt="Monos Chinos Store - Lo mejor en J-Music, Anime y Manga" 
+           loading="eager">
+      <div class="hero-content">
+        <span class="hero-tag">Novedades J-Music & Visual Kei</span>
+        <h2>Lo mejor de la cultura japonesa en un solo lugar</h2>
+        <p>Figuras coleccionables, Manga original, CDs de J-Music/Visual Kei y Merchandising exclusivo.</p>
+      </div>
+    </section>
+
+    <!-- Categorías -->
+    <section id="categorias" class="mb-5">
+      <div class="section-header">
+        <h2 class="section-title">Categorías</h2>
+        <a href="#catalogo" class="section-link">Ver todo <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="row g-3" id="listaCategorias">
+        <div class="col-6 col-md-3">
+          <a href="#catalogo" class="card-categoria" data-categoria="Figura">
+            <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80" alt="Figuras coleccionables anime" loading="lazy">
+            <div class="category-overlay">
+              <div class="category-name">Figuras</div>
+              <div class="category-count" id="catFigura">0 productos</div>
+            </div>
+          </a>
+        </div>
+        <div class="col-6 col-md-3">
+          <a href="#catalogo" class="card-categoria" data-categoria="Manga">
+            <img src="https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=600&auto=format&fit=crop&q=80" alt="Manga japonés original" loading="lazy">
+            <div class="category-overlay">
+              <div class="category-name">Manga</div>
+              <div class="category-count" id="catManga">0 productos</div>
+            </div>
+          </a>
+        </div>
+        <div class="col-6 col-md-3">
+          <a href="#catalogo" class="card-categoria" data-categoria="CD">
+            <img src="https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?w=600&auto=format&fit=crop&q=80" alt="CDs música japonesa J-Music" loading="lazy">
+            <div class="category-overlay">
+              <div class="category-name">CDs J-Music</div>
+              <div class="category-count" id="catCD">0 productos</div>
+            </div>
+          </a>
+        </div>
+        <div class="col-6 col-md-3">
+          <a href="#catalogo" class="card-categoria" data-categoria="Merch">
+            <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80" alt="Merchandising anime y manga" loading="lazy">
+            <div class="category-overlay">
+              <div class="category-name">Merch</div>
+              <div class="category-count" id="catMerch">0 productos</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Catalogo -->
+    <section id="catalogo">
+      <div class="section-header">
+        <h2 class="section-title">Catálogo</h2>
+      </div>
+
+      <div class="filters-bar">
+        <div class="row g-3 align-items-end">
+          <div class="col-sm-7">
+            <label for="buscador" class="form-label">Buscar productos</label>
+            <input type="search" class="form-control" id="buscador" maxlength="60" placeholder="Buscar por nombre, código o serie...">
+          </div>
+          <div class="col-sm-5">
+            <label for="filtroCategoria" class="form-label">Categoría</label>
+            <select class="form-select" id="filtroCategoria">
+              <option value="">Todas las categorías</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3" id="gridProductos"></div>
+
+      <div class="no-results d-none" id="sinResultados">
+        <div class="icon">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+        <h4>No se encontraron productos</h4>
+        <p>Intenta con otra búsqueda o filtro.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer-mcs">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="footer-brand"><span class="brand-accent">Monos</span> Chinos Store</div>
+          <p>Tu tienda especializada en cultura japonesa. Figuras coleccionables, Manga original, CDs de J-Music/Visual Kei y Merchandising exclusivo.</p>
+        </div>
+        <div class="col-md-4">
+          <h6>Enlaces rápidos</h6>
+          <ul>
+            <li><a href="#catalogo">Catálogo completo</a></li>
+            <li><a href="#categorias">Categorías</a></li>
+            <li><a href="login.html">Panel admin</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h6>Contacto</h6>
+          <p class="mb-1"><strong>Email:</strong> info@monoschinosstore.cl</p>
+          <p class="mb-1"><strong>Instagram:</strong> @monoschinosstore</p>
+          <p class="mb-0"><strong>Chile</strong> — Despachos a todo el país</p>
+        </div>
+      </div>
+      <hr class="footer-divider">
+      <p class="text-center footer-copyright mb-0">&copy; 2026 Monos Chinos Store. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+<script>
+/* ============ SEED DE PRODUCTOS CON IMÁGENES REALES ============ */
+var SEED_PRODUCTOS = [
+  {
+    id:1,  codigo:"NAR-F01",  nombre:"Nendoroid Naruto Uzumaki",              categoria:"Figura", precio:45990, precioAnt:52990, stock:15, activo:true, 
+    desc:"Figura Nendoroid de Naruto Uzumaki (Shippuden) con rostros intercambiables y accesorios. Good Smile Company.", 
+    img:"https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80",
+     marca:"Good Smile Company"
+  },
+  {
+    id:2,  codigo:"RZ-F01",   nombre:"Figura Scale Rem Re:Zero 1/7",          categoria:"Figura", precio:89990, precioAnt:0, stock:8,  activo:true, 
+    desc:"Figura a escala 1/7 de Rem (Re:Zero kara Hajimeru Isekai Seikatsu). Alta calidad de pintura y base decorativa. Kadokawa.", 
+    img:"https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80",
+     marca:"Kadokawa / Kadokawa Collection"
+  },
+  {
+    id:3,  codigo:"OP-F01",   nombre:"Figura Monkey D. Luffy Gear 5",         categoria:"Figura", precio:64990, precioAnt:72990, stock:12, activo:true, 
+    desc:"Figura de Luffy en su forma Gear 5 (One Piece). PVC de alta calidad con efectos de llama. Banpresto / Bandai Spirits.", 
+    img:"https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80",
+     marca:"Bandai Spirits / Banpresto"
+  },
+  {
+    id:4,  codigo:"DS-F01",   nombre:"Figura Tanjiro Kamado Water Breathing", categoria:"Figura", precio:52990, precioAnt:0, stock:10, activo:true, 
+    desc:"Figura de Tanjiro Kamado con efecto Water Breathing (Kimetsu no Yaiba). Edición especial con base de efectos translúcidos.", 
+    img:"https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=600&auto=format&fit=crop&q=80",
+     marca:"Aniplex / Kotobukiya"
+  },
+  {
+    id:5,  codigo:"OP-M01",   nombre:"One Piece Vol. 1-3 Pack",               categoria:"Manga",  precio:15990, precioAnt:0, stock:25, activo:true, 
+    desc:"Pack de los primeros 3 volúmenes de One Piece (Edición japonesa original). Eiichiro Oda / Shueisha.", 
+    img:"https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg",
+     marca:"Shueisha / Jump Comics"
+  },
+  {
+    id:6,  codigo:"NAR-M01",  nombre:"Naruto Vol. 1-5 Pack",                  categoria:"Manga",  precio:24990, precioAnt:28990, stock:20, activo:true, 
+    desc:"Pack de los primeros 5 volúmenes de Naruto (Edición japonesa). Masashi Kishimoto / Shueisha.", 
+    img:"https://upload.wikimedia.org/wikipedia/en/9/94/NarutoCoverTankobon1.jpg",
+     marca:"Shueisha / Jump Comics"
+  },
+  {
+    id:7,  codigo:"DB-M01",   nombre:"Dragon Ball Vol. 1-3 Edición Kanzenban", categoria:"Manga",  precio:18990, precioAnt:0, stock:18, activo:true, 
+    desc:"Edición Kanzenban de los primeros volúmenes de Dragon Ball. Akira Toriyama / Shueisha. Papel de alta calidad.", 
+    img:"https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80",
+     marca:"Shueisha / Jump Comics"
+  },
+  {
+    id:8,  codigo:"TG-C01",   nombre:"THE GAZETTE - Stacked 24h",             categoria:"CD",     precio:14990, precioAnt:0, stock:6,  activo:true, 
+    desc:"Álbum 'Stacked 24h' de THE GAZETTE (Visual Kei). Edición original importada de Japón con booklet completo.", 
+    img:"https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?w=600&auto=format&fit=crop&q=80",
+     marca:"Sony Music / King Records"
+  },
+  {
+    id:9,  codigo:"OOR-C01",  nombre:"ONE OK ROCK - Eye of the Storm",        categoria:"CD",     precio:12990, precioAnt:15990, stock:10, activo:true, 
+    desc:"Álbum 'Eye of the Storm' de ONE OK ROCK. Rock alternativo japonés producido por Rob Cavallo. Edición japonesa con bonus track.", 
+    img:"https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
+     marca:"Fueled By Ramen / Warner Music"
+  },
+  {
+    id:10, codigo:"AIM-C01",  nombre:"Aimer - Walpurgis",                     categoria:"CD",     precio:13990, precioAnt:0, stock:8,  activo:true, 
+    desc:"Single 'Walpurgis' de Aimer. Cantante japonesa famosa por openings/endings de anime (Fate, Kimetsu, etc.). Edición limitada.", 
+    img:"https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80",
+     marca:"SACRA MUSIC / Sony Music"
+  },
+  {
+    id:11, codigo:"TOT-M01",  nombre:"Llavero Totoro - Mi Vecino Totoro",     categoria:"Merch",  precio:3990,  precioAnt:0, stock:35, activo:true, 
+    desc:"Llavero metálico esmaltado de Totoro (Studio Ghibli). Detalle premium, anilla resistente. Producto oficial.", 
+    img:"https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80",
+     marca:"Studio Ghibli / Benelic"
+  },
+  {
+    id:12, codigo:"DS-M01",   nombre:"Poster Demon Slayer Edición Limitada",  categoria:"Merch",  precio:7990,  precioAnt:9990, stock:20, activo:true, 
+    desc:"Poster oficial Kimetsu no Yaiba (Demon Slayer) tamaño A3. Impresión offset alta calidad. Edición limitada.", 
+    img:"https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=600&auto=format&fit=crop&q=80",
+     marca:"Aniplex / Ufotable"
+  }
+];
+
+var KEY_PRODUCTOS = "mcs_productos";
+var productos = [];
+
+function cargarProductos() {
+  var guardados = localStorage.getItem(KEY_PRODUCTOS);
+  if (guardados) {
+    try { return JSON.parse(guardados); } catch(e) { /* cae al seed */ }
+  }
+  localStorage.setItem(KEY_PRODUCTOS, JSON.stringify(SEED_PRODUCTOS));
+  return SEED_PRODUCTOS.slice();
+}
+
+function contarPorCategoria(cat) {
+  var n = 0;
+  for (var i = 0; i < productos.length; i++) {
+    if (productos[i].categoria === cat && productos[i].activo) n++;
+  }
+  return n;
+}
+
+function actualizarCategorias() {
+  var cats = ["Figura", "Manga", "CD", "Merch"];
+  for (var i = 0; i < cats.length; i++) {
+    var el = document.getElementById("cat" + cats[i]);
+    if (el) el.textContent = contarPorCategoria(cats[i]) + " productos";
+  }
+}
+
+function llenarSelectCategorias() {
+  var select = document.getElementById("filtroCategoria");
+  var cats = [];
+  for (var i = 0; i < productos.length; i++) {
+    if (cats.indexOf(productos[i].categoria) === -1) cats.push(productos[i].categoria);
+  }
+  cats.sort();
+  select.innerHTML = '<option value="">Todas las categorías</option>';
+  for (var j = 0; j < cats.length; j++) {
+    var op = document.createElement("option");
+    op.value = cats[j];
+    op.textContent = cats[j];
+    select.appendChild(op);
+  }
+}
+
+function pintarCatalogo() {
+  var grid      = document.getElementById("gridProductos");
+  var texto     = document.getElementById("buscador").value.toLowerCase();
+  var categoria = document.getElementById("filtroCategoria").value;
+
+  grid.innerHTML = "";
+  var mostrados = 0;
+
+  for (var i = 0; i < productos.length; i++) {
+    var p = productos[i];
+    if (!p.activo) continue;
+
+    var textoBusqueda = (p.codigo + " " + p.nombre + " " + p.categoria + " " + p.desc + " " + (p.marca||"")).toLowerCase();
+    if (textoBusqueda.indexOf(texto) === -1) continue;
+    if (categoria !== "" && p.categoria !== categoria) continue;
+
+    var col = document.createElement("div");
+    col.className = "col-6 col-md-4 col-lg-3";
+
+    var card = document.createElement("div");
+    card.className = "product-card";
+
+    var priceHtml = '<span class="price-current">$' + p.precio.toLocaleString("es-CL") + '</span>';
+    if (p.precioAnt && p.precioAnt > p.precio) {
+      priceHtml += '<span class="price-old">$' + p.precioAnt.toLocaleString("es-CL") + '</span>';
+    }
+    priceHtml += '<span class="price-shipping">Envío calculado en checkout</span>';
+
+    card.innerHTML =
+      '<div class="product-image-wrapper">' +
+        '<img class="product-image" src="' + p.img + '" alt="' + p.nombre + '" loading="lazy">' +
+      '</div>' +
+      '<div class="product-info">' +
+        '<div class="product-brand">' + (p.marca || "Importado Japón") + '</div>' +
+        '<h3 class="product-title">' + p.nombre + '</h3>' +
+        '<div class="product-price">' + priceHtml + '</div>' +
+      '</div>';
+
+    col.appendChild(card);
+    grid.appendChild(col);
+    mostrados++;
+  }
+
+  var sinRes = document.getElementById("sinResultados");
+  if (mostrados === 0) {
+    sinRes.classList.remove("d-none");
+  } else {
+    sinRes.classList.add("d-none");
+  }
+}
+
+/* ============ INICIALIZACION ============ */
+productos = cargarProductos();
+llenarSelectCategorias();
+actualizarCategorias();
+pintarCatalogo();
+
+document.getElementById("buscador").addEventListener("input", pintarCatalogo);
+document.getElementById("filtroCategoria").addEventListener("change", pintarCatalogo);
+
+/* Click en categorias -> filtra y scroll */
+var cardsCat = document.querySelectorAll(".card-categoria");
+for (var c = 0; c < cardsCat.length; c++) {
+  cardsCat[c].addEventListener("click", function(e) {
+    e.preventDefault();
+    var cat = this.getAttribute("data-categoria");
+    document.getElementById("filtroCategoria").value = cat;
+    document.getElementById("buscador").value = "";
+    pintarCatalogo();
+    document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
+  });
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
