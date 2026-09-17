@@ -116,6 +116,10 @@
           <label for="prodDesc" class="form-label">Descripción</label>
           <input type="text" class="form-control" id="prodDesc" maxlength="200">
         </div>
+        <div class="col-md-6">
+          <label for="ProdImg" class="form-label">Url Img</label>
+          <input type="text" class="form-control" id="prodImg" maxlength="200">
+        </div>
         <div class="col-md-12">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="prodActivo" checked>
@@ -163,18 +167,18 @@
 <script>
 /* ============ SEED DE PRODUCTOS CON IMÁGENES REALES ============ */
 var SEED_PRODUCTOS = [
-  { id:1,  codigo:"NAR-F01",  nombre:"Nendoroid Naruto Uzumaki",              categoria:"Figura", precio:45990, precioAnt:52990, stock:15, activo:true, desc:"Figura Nendoroid de Naruto Uzumaki (Shippuden) con rostros intercambiables y accesorios. Good Smile Company.", img:"https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80", marca:"Good Smile Company" },
-  { id:2,  codigo:"RZ-F01",   nombre:"Figura Scale Rem Re:Zero 1/7",          categoria:"Figura", precio:89990, precioAnt:0, stock:8,  activo:true, desc:"Figura a escala 1/7 de Rem (Re:Zero kara Hajimeru Isekai Seikatsu). Alta calidad de pintura y base decorativa. Kadokawa.", img:"https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80", marca:"Kadokawa / Kadokawa Collection" },
-  { id:3,  codigo:"OP-F01",   nombre:"Figura Monkey D. Luffy Gear 5",         categoria:"Figura", precio:64990, precioAnt:72990, stock:12, activo:true, desc:"Figura de Luffy en su forma Gear 5 (One Piece). PVC de alta calidad con efectos de llama. Banpresto / Bandai Spirits.", img:"https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80", marca:"Bandai Spirits / Banpresto" },
-  { id:4,  codigo:"DS-F01",   nombre:"Figura Tanjiro Kamado Water Breathing", categoria:"Figura", precio:52990, precioAnt:0, stock:10, activo:true, desc:"Figura de Tanjiro Kamado con efecto Water Breathing (Kimetsu no Yaiba). Edición especial con base de efectos translúcidos.", img:"https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=600&auto=format&fit=crop&q=80", marca:"Aniplex / Kotobukiya" },
-  { id:5,  codigo:"OP-M01",   nombre:"One Piece Vol. 1-3 Pack",               categoria:"Manga",  precio:15990, precioAnt:0, stock:25, activo:true, desc:"Pack de los primeros 3 volúmenes de One Piece (Edición japonesa original). Eiichiro Oda / Shueisha.", img:"https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg", marca:"Shueisha / Jump Comics" },
-  { id:6,  codigo:"NAR-M01",  nombre:"Naruto Vol. 1-5 Pack",                  categoria:"Manga",  precio:24990, precioAnt:28990, stock:20, activo:true, desc:"Pack de los primeros 5 volúmenes de Naruto (Edición japonesa). Masashi Kishimoto / Shueisha.", img:"https://upload.wikimedia.org/wikipedia/en/9/94/NarutoCoverTankobon1.jpg", marca:"Shueisha / Jump Comics" },
-  { id:7,  codigo:"DB-M01",   nombre:"Dragon Ball Vol. 1-3 Edición Kanzenban", categoria:"Manga",  precio:18990, precioAnt:0, stock:18, activo:true, desc:"Edición Kanzenban de los primeros volúmenes de Dragon Ball. Akira Toriyama / Shueisha. Papel de alta calidad.", img:"https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80", marca:"Shueisha / Jump Comics" },
-  { id:8,  codigo:"TG-C01",   nombre:"THE GAZETTE - Stacked 24h",             categoria:"CD",     precio:14990, precioAnt:0, stock:6,  activo:true, desc:"Álbum 'Stacked 24h' de THE GAZETTE (Visual Kei). Edición original importada de Japón con booklet completo.", img:"https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?w=600&auto=format&fit=crop&q=80", marca:"Sony Music / King Records" },
-  { id:9,  codigo:"OOR-C01",  nombre:"ONE OK ROCK - Eye of the Storm",        categoria:"CD",     precio:12990, precioAnt:15990, stock:10, activo:true, desc:"Álbum 'Eye of the Storm' de ONE OK ROCK. Rock alternativo japonés producido por Rob Cavallo. Edición japonesa con bonus track.", img:"https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80", marca:"Fueled By Ramen / Warner Music" },
-  { id:10, codigo:"AIM-C01",  nombre:"Aimer - Walpurgis",                     categoria:"CD",     precio:13990, precioAnt:0, stock:8,  activo:true, desc:"Single 'Walpurgis' de Aimer. Cantante japonesa famosa por openings/endings de anime (Fate, Kimetsu, etc.). Edición limitada.", img:"https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80", marca:"SACRA MUSIC / Sony Music" },
-  { id:11, codigo:"TOT-M01",  nombre:"Llavero Totoro - Mi Vecino Totoro",     categoria:"Merch",  precio:3990,  precioAnt:0, stock:35, activo:true, desc:"Llavero metálico esmaltado de Totoro (Studio Ghibli). Detalle premium, anilla resistente. Producto oficial.", img:"https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80", marca:"Studio Ghibli / Benelic" },
-  { id:12, codigo:"DS-M01",   nombre:"Poster Demon Slayer Edición Limitada",  categoria:"Merch",  precio:7990,  precioAnt:9990, stock:20, activo:true, desc:"Poster oficial Kimetsu no Yaiba (Demon Slayer) tamaño A3. Impresión offset alta calidad. Edición limitada.", img:"https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=600&auto=format&fit=crop&q=80", marca:"Aniplex / Ufotable" }
+  { id:0,  codigo:"NAR-F01",  nombre:"Nendoroid Naruto Uzumaki",              categoria:"Figura", precio:45990, precioAnt:52990, stock:15, activo:true, desc:"Figura Nendoroid de Naruto Uzumaki (Shippuden) con rostros intercambiables y accesorios. Good Smile Company.", img:"https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80", marca:"Good Smile Company" },
+  { id:1,  codigo:"RZ-F01",   nombre:"Figura Scale Rem Re:Zero 1/7",          categoria:"Figura", precio:89990, precioAnt:0, stock:8,  activo:true, desc:"Figura a escala 1/7 de Rem (Re:Zero kara Hajimeru Isekai Seikatsu). Alta calidad de pintura y base decorativa. Kadokawa.", img:"https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80", marca:"Kadokawa / Kadokawa Collection" },
+  { id:2,  codigo:"OP-F01",   nombre:"Figura Monkey D. Luffy Gear 5",         categoria:"Figura", precio:64990, precioAnt:72990, stock:12, activo:true, desc:"Figura de Luffy en su forma Gear 5 (One Piece). PVC de alta calidad con efectos de llama. Banpresto / Bandai Spirits.", img:"https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80", marca:"Bandai Spirits / Banpresto" },
+  { id:3,  codigo:"DS-F01",   nombre:"Figura Tanjiro Kamado Water Breathing", categoria:"Figura", precio:52990, precioAnt:0, stock:10, activo:true, desc:"Figura de Tanjiro Kamado con efecto Water Breathing (Kimetsu no Yaiba). Edición especial con base de efectos translúcidos.", img:"https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=600&auto=format&fit=crop&q=80", marca:"Aniplex / Kotobukiya" },
+  { id:4,  codigo:"OP-M01",   nombre:"One Piece Vol. 1-3 Pack",               categoria:"Manga",  precio:15990, precioAnt:0, stock:25, activo:true, desc:"Pack de los primeros 3 volúmenes de One Piece (Edición japonesa original). Eiichiro Oda / Shueisha.", img:"https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg", marca:"Shueisha / Jump Comics" },
+  { id:5,  codigo:"NAR-M01",  nombre:"Naruto Vol. 1-5 Pack",                  categoria:"Manga",  precio:24990, precioAnt:28990, stock:20, activo:true, desc:"Pack de los primeros 5 volúmenes de Naruto (Edición japonesa). Masashi Kishimoto / Shueisha.", img:"https://upload.wikimedia.org/wikipedia/en/9/94/NarutoCoverTankobon1.jpg", marca:"Shueisha / Jump Comics" },
+  { id:6,  codigo:"DB-M01",   nombre:"Dragon Ball Vol. 1-3 Edición Kanzenban", categoria:"Manga",  precio:18990, precioAnt:0, stock:18, activo:true, desc:"Edición Kanzenban de los primeros volúmenes de Dragon Ball. Akira Toriyama / Shueisha. Papel de alta calidad.", img:"https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop&q=80", marca:"Shueisha / Jump Comics" },
+  { id:7,  codigo:"TG-C01",   nombre:"THE GAZETTE - Stacked 24h",             categoria:"CD",     precio:14990, precioAnt:0, stock:6,  activo:true, desc:"Álbum 'Stacked 24h' de THE GAZETTE (Visual Kei). Edición original importada de Japón con booklet completo.", img:"https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?w=600&auto=format&fit=crop&q=80", marca:"Sony Music / King Records" },
+  { id:8,  codigo:"OOR-C01",  nombre:"ONE OK ROCK - Eye of the Storm",        categoria:"CD",     precio:12990, precioAnt:15990, stock:10, activo:true, desc:"Álbum 'Eye of the Storm' de ONE OK ROCK. Rock alternativo japonés producido por Rob Cavallo. Edición japonesa con bonus track.", img:"https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80", marca:"Fueled By Ramen / Warner Music" },
+  { id:9, codigo:"AIM-C01",  nombre:"Aimer - Walpurgis",                     categoria:"CD",     precio:13990, precioAnt:0, stock:8,  activo:true, desc:"Single 'Walpurgis' de Aimer. Cantante japonesa famosa por openings/endings de anime (Fate, Kimetsu, etc.). Edición limitada.", img:"https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80", marca:"SACRA MUSIC / Sony Music" },
+  { id:10, codigo:"TOT-M01",  nombre:"Llavero Totoro - Mi Vecino Totoro",     categoria:"Merch",  precio:3990,  precioAnt:0, stock:35, activo:true, desc:"Llavero metálico esmaltado de Totoro (Studio Ghibli). Detalle premium, anilla resistente. Producto oficial.", img:"https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80", marca:"Studio Ghibli / Benelic" },
+  { id:11, codigo:"DS-M01",   nombre:"Poster Demon Slayer Edición Limitada",  categoria:"Merch",  precio:7990,  precioAnt:9990, stock:20, activo:true, desc:"Poster oficial Kimetsu no Yaiba (Demon Slayer) tamaño A3. Impresión offset alta calidad. Edición limitada.", img:"https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=600&auto=format&fit=crop&q=80", marca:"Aniplex / Ufotable" }
 ];
 
 var KEY_SESION    = "mcs_sesion";
@@ -237,6 +241,7 @@ function limpiarFormulario() {
   document.getElementById("prodPrecio").value = "";
   document.getElementById("prodStock").value = "";
   document.getElementById("prodDesc").value = "";
+  document.getElementById("prodImg").value = "";
   document.getElementById("prodActivo").checked = true;
 }
 
@@ -403,6 +408,7 @@ function editarProducto(id) {
   document.getElementById("prodPrecio").value   = p.precio;
   document.getElementById("prodStock").value    = p.stock;
   document.getElementById("prodDesc").value     = p.desc || "";
+  document.getElementById("prodImg").value=p.img;
   document.getElementById("prodActivo").checked = p.activo;
   document.getElementById("panelForm").classList.remove("d-none");
   document.getElementById("prodNombre").focus();
@@ -436,18 +442,22 @@ function guardarProducto() {
   var precio    = document.getElementById("prodPrecio").value;
   var stock     = document.getElementById("prodStock").value;
   var desc      = document.getElementById("prodDesc").value.trim();
+  console.log(document.getElementById("prodImg").value);
+  var img = document.getElementById("prodImg").value;
   var activo    = document.getElementById("prodActivo").checked;
 
   if (!codigo || !nombre || !categoria) {
     mostrarErrorForm("Completa código, nombre y categoría.");
     return;
   }
-
+  if (img ===""){
+    img=generarImgPorDefecto(codigo);
+  }
   if (id === "") {
     productos.push({
       id: siguienteId(), codigo: codigo, nombre: nombre, categoria: categoria,
       precio: Number(precio), stock: Number(stock), activo: activo, desc: desc,
-      img: generarImgPorDefecto(codigo), marca: "Importado Japón", precioAnt: 0
+      img: img, marca: "Importado Japón", precioAnt: 0
     });
     mostrarAviso("Producto creado correctamente", "success");
   } else {
