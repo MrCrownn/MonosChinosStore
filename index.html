@@ -45,13 +45,8 @@
           <span class="brand-accent">Monos</span> Chinos Store
         </a>
 
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-          <li class="nav-item">
-            <a class="nav-link" href="login.html">Ingresar</a>
-          </li>
-          <li class="nav-item ms-lg-2">
-            <a class="btn btn-outline-rojo btn-sm-custom" href="login.html">Admin</a>
-          </li>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center" id="navSesion">
+          <!-- Se llena con JS según la sesión -->
         </ul>
       </div>
     </div>
@@ -372,6 +367,54 @@ for (var c = 0; c < cardsCat.length; c++) {
     document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
   });
 }
+
+/* ============ NAVBAR SEGÚN SESIÓN ============ */
+function leerSesion() {
+  try {
+    var s = JSON.parse(sessionStorage.getItem("mcs_sesion"));
+    if (!s || !s.usuario || !s.rol) return null;
+    if (s.expira && Date.now() > s.expira) {
+      sessionStorage.removeItem("mcs_sesion");
+      return null;
+    }
+    return s;
+  } catch(e) { return null; }
+}
+
+function renderNavSesion() {
+  var nav = document.getElementById("navSesion");
+  var sesion = leerSesion();
+
+  if (!sesion) {
+    nav.innerHTML =
+      '<li class="nav-item">' +
+        '<a class="btn btn-outline-rojo btn-sm-custom" href="login.html">Ingresar</a>' +
+      '</li>';
+  } else {
+    var html = '';
+    if (sesion.rol === "admin") {
+      html +=
+        '<li class="nav-item me-lg-2">' +
+          '<a class="nav-link" href="productos.html">Panel admin</a>' +
+        '</li>';
+    }
+    html +=
+      '<li class="nav-item">' +
+        '<span class="nav-link disabled text-muted">' + sesion.nombre + '</span>' +
+      '</li>' +
+      '<li class="nav-item">' +
+        '<button class="btn btn-outline-rojo btn-sm-custom" id="btnCerrarSesion">Salir</button>' +
+      '</li>';
+    nav.innerHTML = html;
+
+    document.getElementById("btnCerrarSesion").addEventListener("click", function() {
+      sessionStorage.removeItem("mcs_sesion");
+      window.location.reload();
+    });
+  }
+}
+
+renderNavSesion();
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
