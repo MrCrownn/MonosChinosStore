@@ -14,7 +14,7 @@
 
   <!-- Navbar Admin -->
   <nav class="navbar navbar-mcs">
-    <div class="container">
+    <div class="container">\
       <a class="navbar-brand" href="index.html">
         <span class="brand-accent">Monos</span> Chinos Store
       </a>
@@ -95,11 +95,11 @@
           <label for="prodCodigo" class="form-label">Código</label>
           <input type="text" class="form-control" id="prodCodigo" maxlength="20" placeholder="ej: NAR-F02">
         </div>
-        <div class="col-md-5">
+        <div class="col-md-3">
           <label for="prodNombre" class="form-label">Nombre</label>
-          <input type="text" class="form-control" id="prodNombre" maxlength="80">
+          <input type="text" class="form-control" id="prodNombre" maxlength="50">
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="prodCategoria" class="form-label">Categoría</label>
           <input type="text" class="form-control" id="prodCategoria" maxlength="40" list="sugerencias">
           <datalist id="sugerencias"></datalist>
@@ -109,6 +109,10 @@
           <input type="number" class="form-control" id="prodPrecio" min="0" step="1">
         </div>
         <div class="col-md-3">
+          <label for="prodMarca" class="form-label">Marca</label>
+          <input type="text" class="form-control" id="prodMarca" maxlength="200">
+        </div>
+        <div class="col-md-3">
           <label for="prodStock" class="form-label">Stock</label>
           <input type="number" class="form-control" id="prodStock" min="0" step="1">
         </div>
@@ -116,10 +120,12 @@
           <label for="prodDesc" class="form-label">Descripción</label>
           <input type="text" class="form-control" id="prodDesc" maxlength="200">
         </div>
+        
         <div class="col-md-6">
           <label for="ProdImg" class="form-label">Url Img</label>
           <input type="text" class="form-control" id="prodImg" maxlength="200">
         </div>
+        
         <div class="col-md-12">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="prodActivo" checked>
@@ -242,7 +248,9 @@ function limpiarFormulario() {
   document.getElementById("prodStock").value = "";
   document.getElementById("prodDesc").value = "";
   document.getElementById("prodImg").value = "";
+  document.getElementById("prodMarca").value = "";
   document.getElementById("prodActivo").checked = true;
+
 }
 
 function mostrarErrorForm(msg) {
@@ -276,6 +284,7 @@ function llenarCategorias() {
   for (var j = 0; j < cats.length; j++) {
     var opSel = document.createElement("option");
     opSel.value = cats[j];
+    opSel.textContent=cats[j];
     select.appendChild(opSel);
     var opList = document.createElement("option");
     opList.value = cats[j];
@@ -406,12 +415,15 @@ function editarProducto(id) {
   document.getElementById("prodNombre").value   = p.nombre;
   document.getElementById("prodCategoria").value = p.categoria;
   document.getElementById("prodPrecio").value   = p.precio;
+  document.getElementById("prodMarca").value=p.marca;
   document.getElementById("prodStock").value    = p.stock;
   document.getElementById("prodDesc").value     = p.desc || "";
   document.getElementById("prodImg").value=p.img;
+  
   document.getElementById("prodActivo").checked = p.activo;
   document.getElementById("panelForm").classList.remove("d-none");
   document.getElementById("prodNombre").focus();
+  
 }
 
 function eliminarProducto(id) {
@@ -440,9 +452,9 @@ function guardarProducto() {
   var nombre    = document.getElementById("prodNombre").value.trim();
   var categoria = document.getElementById("prodCategoria").value.trim();
   var precio    = document.getElementById("prodPrecio").value;
+  var marca     = document.getElementById("prodMarca").value ?? "Importado Japón";
   var stock     = document.getElementById("prodStock").value;
   var desc      = document.getElementById("prodDesc").value.trim();
-  console.log(document.getElementById("prodImg").value);
   var img = document.getElementById("prodImg").value;
   var activo    = document.getElementById("prodActivo").checked;
 
@@ -457,7 +469,7 @@ function guardarProducto() {
     productos.push({
       id: siguienteId(), codigo: codigo, nombre: nombre, categoria: categoria,
       precio: Number(precio), stock: Number(stock), activo: activo, desc: desc,
-      img: img, marca: "Importado Japón", precioAnt: 0
+      img: img, marca: marca, precioAnt: 0
     });
     mostrarAviso("Producto creado correctamente", "success");
   } else {
