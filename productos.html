@@ -534,6 +534,9 @@ if (!sesion) {
     ocultarErrorForm();
   });
 }
+if (sesion.rol !== "admin") {
+    window.location.replace("index.html");
+}
 </script>
 
 </body>
