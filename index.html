@@ -13,13 +13,11 @@
 <body>
 
   <!-- Top Bar / Anuncio -->
-  <div class="top-bar">
-    <div class="container">
-      <span>🚚 Despacho a todo Chile por Starken / Chilexpress / CorreosChile</span>
-      <span>🔒 Compra 100% segura — Garantía total en tu pedido</span>
-      <span>📦 Envíos semanales — Productos 100% originales importados</span>
-    </div>
+ <div class="top-bar">
+  <div class="container text-center">
+    <span id="topBarMsg" style="transition:opacity 0.4s;"></span>
   </div>
+</div>
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-mcs">
@@ -70,7 +68,7 @@
     <section id="categorias" class="mb-5">
       <div class="section-header">
         <h2 class="section-title">Categorías</h2>
-        <a href="#catalogo" class="section-link">Ver todo <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+        <a href="#catalogo" class="section-link"> <b>Ver todo <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></b></a>
       </div>
       <div class="row g-3" id="listaCategorias">
         <div class="col-6 col-md-3">
@@ -228,25 +226,25 @@ var SEED_PRODUCTOS = [
   {
     id:9,  codigo:"OOR-C01",  nombre:"[ALBUM] Jinsei×Boku= (Limited Edition)",        categoria:"CD",     precio:12990, precioAnt:15990, stock:10, activo:true, 
     desc:"El álbum definitivo que consagró a ONE OK ROCK a nivel mundial. Una obra maestra de rock alternativo y post-hardcore que incluye himnos masivos como 'The Beginning' (de la película Rurouni Kenshin) y 'Clock Strikes'. Energía pura, guitarras potentes y la voz inconfundible de Taka en su máximo esplendor. ¡Un imprescindible de la música japonesa moderna!", 
-    img:"https://cdnx.jumpseller.com/yumestore/image/36731327/resize/610/610?1687641435",
+    img:"jinseiboku.webp",
      marca:"A-Sketch"
   },
   {
     id:10, codigo:"AIM-C01",  nombre:"Aimer - Walpurgis",                     categoria:"CD",     precio:13990, precioAnt:0, stock:8,  activo:true, 
     desc:"Single 'Walpurgis' de Aimer. Cantante japonesa famosa por openings/endings de anime (Fate, Kimetsu, etc.). Edición limitada.", 
-    img:"https://upload.wikimedia.org/wikipedia/en/1/1d/Aimer_Walpurgis.jpg",
+    img:"img/walpurgis.jpg",
      marca:"SACRA MUSIC / Sony Music"
   },
   {
     id:11, codigo:"TOT-M01",  nombre:"Llavero Totoro - Mi Vecino Totoro",     categoria:"Merch",  precio:3990,  precioAnt:0, stock:35, activo:true, 
     desc:"Llavero metálico esmaltado de Totoro (Studio Ghibli). Detalle premium, anilla resistente. Producto oficial.", 
-    img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuAOAv1WigDUiAwSpM-APdXh31IQrsXl3W2oMHbmYPCdCz5ZKCHKoPqlo&s=10",
+    img:"img/totoro.jpeg",
      marca:"Studio Ghibli / Benelic"
   },
   {
     id:12, codigo:"DS-M01",   nombre:"Poster Demon Slayer Edición Limitada",  categoria:"Merch",  precio:7990,  precioAnt:9990, stock:20, activo:true, 
     desc:"Poster oficial Kimetsu no Yaiba (Demon Slayer) tamaño A3. Impresión offset alta calidad. Edición limitada.", 
-    img:"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.storefunky.com%2Fcdn%2Fshop%2Ffiles%2F7_resultado_4ca26a6e-ecc8-4b17-967d-8b2b7ef3bd03.webp%3Fv%3D1775707827%26width%3D2160&f=1&nofb=1&ipt=c231b2a94351372e2feae8017c04a565126d3ae496def18693512a53b17e0cfc",
+    img:"img/poster_demon_slayer.jpg",
      marca:"Aniplex / Ufotable"
   }
 ];
@@ -346,7 +344,7 @@ function pintarCatalogo() {
   }
 }
 
-/* ============ INICIALIZACION ============ */
+/* INICIALIZACION del html */
 productos = cargarProductos();
 llenarSelectCategorias();
 actualizarCategorias();
@@ -379,6 +377,25 @@ function leerSesion() {
     }
     return s;
   } catch(e) { return null; }
+}
+function iniciarTopBar() {
+  var mensajes = [
+    "🚚 Despacho a todo Chile por Starken / Chilexpress / CorreosChile",
+    "🔒 Compra 100% segura — Garantía total en tu pedido",
+    "📦 Envíos semanales — Productos 100% originales importados"
+  ];
+  var idx = 0;
+  var el = document.getElementById("topBarMsg");
+  el.textContent = mensajes[0];
+
+  setInterval(function() {
+    el.style.opacity = 0;
+    setTimeout(function() {
+      idx = (idx + 1) % mensajes.length;
+      el.textContent = mensajes[idx];
+      el.style.opacity = 1;
+    }, 400);
+  }, 3000);
 }
 
 function renderNavSesion() {
@@ -415,6 +432,7 @@ function renderNavSesion() {
 }
 
 renderNavSesion();
+iniciarTopBar();
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

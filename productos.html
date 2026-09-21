@@ -446,6 +446,12 @@ function generarImgPorDefecto(codigo) {
   return "https://placehold.co/60x60/f5f5f5/BA1E1E?text=" + encodeURIComponent(prefijo);
 }
 
+function existeCodigo(codigo, id) {
+  for (var i = 0; i < productos.length; i++) {
+    if (productos[i].codigo.trim() === codigo.trim()  && productos[i].id !== id) return true;
+  }
+  return false;
+}
 function guardarProducto() {
   ocultarErrorForm();
   var id        = document.getElementById("prodId").value;
@@ -463,8 +469,16 @@ function guardarProducto() {
     mostrarErrorForm("Completa código, nombre y categoría.");
     return;
   }
+  if(existeCodigo(codigo,Number(id))){
+    mostrarErrorForm("El código ya existe. Debe ser único.");
+    return;
+  }
   if (img ===""){
     img=generarImgPorDefecto(codigo);
+  }
+  if (stock < 0 || precio < 0) {
+    mostrarErrorForm("Stock y precio deben ser números positivos.");
+    return;
   }
   if (id === "") {
     productos.push({
