@@ -143,7 +143,39 @@
     </section>
 
   </main>
-
+  <!--Se agrega detalle de producto Usando modal de bootstrap-->
+  <div class="modal fade" id="modalProducto" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg ">
+    <div class="modal-content">
+      <div class="modal-header border-0 pb-0">
+        <span class="badge bg-secondary" id="modalCategoria"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-4">
+          <div class="col-md-6">
+            <img id="modalImg" class="img-fluid rounded" style="width:100%;object-fit:cover;">
+          </div>
+          <div class="col-md-6">
+            <p class="text-muted small mb-1" id="modalMarca"></p>
+            <h3 class="fw-bold mb-2" id="modalNombre"></h3>
+            <p class="text-muted small mb-3" id="modalCodigo"></p>
+            <div class="mb-3">
+              <span class="fs-4 fw-bold" id="modalPrecio"></span>
+              <span class="text-decoration-line-through text-muted ms-2" id="modalPrecioAnt"></span>
+            </div>
+            <p class="small mb-3" id="modalDesc"></p>
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <span class="small fw-bold">Stock:</span>
+              <span id="modalStock" class="badge"></span>
+            </div>
+            <button class="btn btn-rojo w-100">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- Footer -->
   <footer class="footer-mcs">
     <div class="container">
@@ -292,6 +324,38 @@ function llenarSelectCategorias() {
     select.appendChild(op);
   }
 }
+function verDetalle(id) {
+    var p=null;
+    for(var i=0;i<productos.length;i++){
+      if(productos[i].id===id){
+        p=productos[i];
+        break;
+      }
+    }
+    if (!p) return;
+
+    document.getElementById("modalCategoria").textContent = p.categoria;
+    document.getElementById("modalNombre").textContent = p.nombre;
+    document.getElementById("modalCodigo").textContent = "Código: " + p.codigo;
+    document.getElementById("modalMarca").textContent = p.marca || "Importado Japón";
+    document.getElementById("modalDesc").textContent = p.desc || "Sin descripción disponible.";
+    document.getElementById("modalImg").src = p.img;
+    document.getElementById("modalPrecio").textContent = "$" + p.precio.toLocaleString("es-CL");
+    var precioAntEl = document.getElementById("modalPrecioAnt");
+
+    if (p.precioAnt && p.precioAnt > p.precio) {
+      precioAntEl.textContent = "$" + p.precioAnt.toLocaleString("es-CL");
+      precioAntEl.classList.remove("d-none");
+    } else {
+      precioAntEl.classList.add("d-none");
+    }
+    var stockEl = document.getElementById("modalStock");
+    stockEl.textContent = p.stock + " unidades";
+    stockEl.className = "badge " + (p.stock === 0 ? "bg-danger" : p.stock <=5 ? "bg-warning":"bg-success");
+
+    var modal = new bootstrap.Modal(document.getElementById('modalProducto'));
+    modal.show();
+}
 
 function pintarCatalogo() {
   var grid      = document.getElementById("gridProductos");
@@ -314,7 +378,11 @@ function pintarCatalogo() {
 
     var card = document.createElement("div");
     card.className = "product-card";
-
+    card.style.cursor = "pointer";
+    card.setAttribute("data-id", p.id);
+    card.addEventListener("click",function(){
+      verDetalle(Number(this.getAttribute("data-id")));
+    })
     var priceHtml = '<span class="price-current">$' + p.precio.toLocaleString("es-CL") + '</span>';
     if (p.precioAnt && p.precioAnt > p.precio) {
       priceHtml += '<span class="price-old">$' + p.precioAnt.toLocaleString("es-CL") + '</span>';

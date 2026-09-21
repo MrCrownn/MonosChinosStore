@@ -567,7 +567,11 @@ var sesion = leerSesion();
 
 if (!sesion) {
   window.location.replace("login.html");
-} else {
+} else  if (sesion.rol !== "admin") {
+    window.location.replace("index.html");
+}
+else {
+  
   esAdmin = sesion.rol === "admin";
 
   document.getElementById("nombreUsuario").textContent = sesion.nombre;
@@ -594,9 +598,7 @@ if (!sesion) {
     ocultarErrorForm();
   });
 }
-if (sesion.rol !== "admin") {
-    window.location.replace("index.html");
-}
+
 </script>
 
 </body>

@@ -80,7 +80,10 @@
   white-space: nowrap;
   animation: marquee 15s linear infinite;
 }
-
+#modalProducto .modal-content {
+  border-radius: 12px;
+  overflow: hidden;
+}
 @keyframes marquee {
   0%   { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
